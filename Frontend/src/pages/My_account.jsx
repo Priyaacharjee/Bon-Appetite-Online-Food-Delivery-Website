@@ -25,14 +25,13 @@ const My_account = () => {
   const [profilePicture, SetprofilePicture] = useState(null);
   const [loading, setLoading] = useState(false);
 
-
   const fetchUser = () => {
     findUser().then((user) => {
       setname(user.username);
       setemail(user.email);
       setphone(user.contact);
       setaddress(user.address);
-      SetprofilePicture(user.image.url);
+      if (user.image) SetprofilePicture(user.image.url);
       setLoader(false);
     });
   };
@@ -45,7 +44,7 @@ const My_account = () => {
     setLoading(true);
     try {
       let response = await axios.put(
-        "https://bon-appetite-online-food-delivery-website.onrender.com/users/updateuser",
+        "http://localhost:8000/users/updateuser",
         {
           username: newname || name,
           contact: newphone || phone,
@@ -81,48 +80,46 @@ const My_account = () => {
 
   const fileInputRef = useRef(null);
 
-  //const [image, setImage] = useState();
-
- // Upload profile image
- const handleProfileImage = async (e) => {
-  const file = e.target.files[0];
-  if (!file) {
-    alert("Please Upload an Image");
-    return;
-  }
-  const maxSizeInKB = 70;
-  if (file.size > maxSizeInKB * 1024) { 
+ 
+  // Upload profile image
+  const handleProfileImage = async (e) => {
+    const file = e.target.files[0];
+    if (!file) {
+      alert("Please Upload an Image");
+      return;
+    }
+    const maxSizeInKB = 70;
+    if (file.size > maxSizeInKB * 1024) {
       alert(`File size should be less than ${maxSizeInKB} KB.`);
       return;
-  }
+    }
 
-  const imageData = await setFileToBase(file);
+    const imageData = await setFileToBase(file);
 
-  try {
-    const response = await axios.post(
-      "http://localhost:8000/users/uploadprofilepicture",
-      { image: imageData }, 
-      {
-        withCredentials: true,
-      }
-    );
-    alert(response.data);
-    fetchUser();
-  } catch (err) {
-    console.log(err.message);
-  }
-};
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/users/uploadprofilepicture",
+        { image: imageData },
+        {
+          withCredentials: true,
+        }
+      );
+      alert(response.data);
+      fetchUser();
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
-const setFileToBase = (file) => {
-  return new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      //setImage(reader.result);
-      resolve(reader.result); // Resolve the promise with the image data
-    };
-  });
-};
+  const setFileToBase = (file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
+    });
+  };
 
   const [companyName, setcompanyName] = useState();
 
