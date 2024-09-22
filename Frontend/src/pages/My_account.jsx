@@ -32,7 +32,7 @@ const My_account = () => {
       setemail(user.email);
       setphone(user.contact);
       setaddress(user.address);
-      SetprofilePicture(user.image);
+      SetprofilePicture(user.image.url);
       setLoader(false);
     });
   };
