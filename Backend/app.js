@@ -17,7 +17,7 @@ app.use(
   cors({
     origin: function (origin, callback) {
       const allowedOrigins = [
-        "https://bonappetiteonline.vercel.app/",
+        "https://bonappetiteonline.vercel.app",
         "http://localhost:3000"
       ];
       if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
