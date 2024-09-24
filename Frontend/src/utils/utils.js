@@ -1,13 +1,32 @@
-// utils.js
+// *utils.js*
 import axios from "axios";
 
 // USER FUNCTIONS-------------------------------------------------------------------------------
+
+// Check isLoggedIn
+export const checkIsLoggedIn = async () => {
+  try {
+    let response = await axios.get(
+      "https://bon-appetite-online-food-delivery-website.onrender.com/users/checkisloggedin",
+      {
+        withCredentials: true,
+      }
+    );
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 // Logout user
 export const logout = async () => {
   try {
-    let response = await axios.get("https://bon-appetite-online-food-delivery-website.onrender.com/users/logout", {
-      withCredentials: true,
-    });
+    let response = await axios.get(
+      "https://bon-appetite-online-food-delivery-website.onrender.com/users/logout",
+      {
+        withCredentials: true,
+      }
+    );
     return response.data;
   } catch (err) {
     console.log(err);
@@ -17,9 +36,12 @@ export const logout = async () => {
 // Find user
 export const findUser = async () => {
   try {
-    let response = await axios.get("https://bon-appetite-online-food-delivery-website.onrender.com/users/getuser", {
-      withCredentials: true,
-    });
+    let response = await axios.get(
+      "https://bon-appetite-online-food-delivery-website.onrender.com/users/getuser",
+      {
+        withCredentials: true,
+      }
+    );
     if (response.data) {
       return response.data;
     } else {
@@ -33,7 +55,9 @@ export const findUser = async () => {
 // Fetch company details
 export const fetchCompanyDetails = async () => {
   try {
-    let response = await axios.get("https://bon-appetite-online-food-delivery-website.onrender.com/companyDetails");
+    let response = await axios.get(
+      "https://bon-appetite-online-food-delivery-website.onrender.com/companyDetails"
+    );
     return response.data[0];
   } catch (err) {
     console.log(err.message);
@@ -124,10 +148,12 @@ export const logoutAdmin = async () => {
 // Fetch Admin
 export const fetchAdmin = async () => {
   try {
-    let response = await axios.get("https://bon-appetite-online-food-delivery-website.onrender.com/admins/getadmin", {
-      withCredentials: true,
-    });
-
+    let response = await axios.get(
+      "https://bon-appetite-online-food-delivery-website.onrender.com/admins/getadmin",
+      {
+        withCredentials: true,
+      }
+    );
     return response.data;
   } catch (err) {
     console.log(err.message);
@@ -227,9 +253,12 @@ export const deleteDeliveryBoy = async (id) => {
 // Fetch all users
 export const fetchAllUsers = async () => {
   try {
-    let response = await axios.get("https://bon-appetite-online-food-delivery-website.onrender.com/admins/getallusers", {
-      withCredentials: true,
-    });
+    let response = await axios.get(
+      "https://bon-appetite-online-food-delivery-website.onrender.com/admins/getallusers",
+      {
+        withCredentials: true,
+      }
+    );
     return response.data;
   } catch (err) {
     console.log(err.message);
@@ -322,15 +351,20 @@ export const updateFoodItem = async (formData) => {
 };
 
 // Add new restaurent
-export const addNewRestaurent = async (formData) => {
+export const addNewRestaurent = async (
+  imageData,
+  newRestaurentName,
+  newRestaurentAddress
+) => {
   try {
     let response = await axios.post(
       "https://bon-appetite-online-food-delivery-website.onrender.com/admins/addnewrestaurent",
-      formData,
+      // formData,
+      { imageData, newRestaurentName, newRestaurentAddress },
       {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+        // headers: {
+        //   "Content-Type": "multipart/form-data",
+        // },
         withCredentials: true,
       }
     );

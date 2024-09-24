@@ -27,10 +27,10 @@ const {
   updateCategory,
   fetchAllOredes,
   confirmDelete,
-  setAsTodaysOffer,removeFromTodaysOffer
+  setAsTodaysOffer,
+  removeFromTodaysOffer,
 } = require("../controller/adminController");
 const {
-  uploadAdminProfile,
   uploadRestaurent,
   uploadCategory,
 } = require("../middlewares/multer");
@@ -78,18 +78,12 @@ router.delete("/deletedeliveryboy", isLoggedIn, deleteDeliveryBoy);
 router.get("/getallusers", isLoggedIn, getAllUsers);
 
 // UPLOAD PROFILE PICTURE
-router.post(
-  "/uploadprofilepicture",
-  isLoggedIn,
-  uploadAdminProfile.single("image"),
-  uploadProfilePicture
-);
+router.post("/uploadprofilepicture", isLoggedIn, uploadProfilePicture);
 
 // ADD NEW RESTAURENT
 router.post(
   "/addnewrestaurent",
   isLoggedIn,
-  uploadRestaurent.single("image"),
   addNewRestaurent
 );
 
@@ -119,7 +113,7 @@ router.post(
 );
 
 // FETCH ALL CATEGORY
-router.get("/getallcategory",fetchAllCategory);
+router.get("/getallcategory", fetchAllCategory);
 
 // DELETE CATEGORY
 router.delete("/deletecategory", isLoggedIn, deleteCategory);

@@ -441,9 +441,11 @@ const Admin_control_panel = () => {
   const [profilePicture, SetprofilePicture] = useState(null);
   const getAdmin = () => {
     fetchAdmin().then((response) => {
-      setadminName(response.username);
-      SetprofilePicture(response.image);
-      setallOrders(response.currentOrders);
+      if (response) {
+        setadminName(response.username);
+        if (response.image) SetprofilePicture(response.image.url);
+        setallOrders(response.currentOrders);
+      }
     });
   };
 
@@ -473,19 +475,19 @@ const Admin_control_panel = () => {
       return;
     }
 
-    setImage(file);
+    const maxSizeInKB = 70;
+    if (file.size > maxSizeInKB * 1024) {
+      alert(`File size should be less than ${maxSizeInKB} KB.`);
+      return;
+    }
 
-    const formData = new FormData();
-    formData.append("image", file);
+    const imageData = await setFileToBase(file);
 
     try {
       const response = await axios.post(
-        "https://bon-appetite-online-food-delivery-website.onrender.com/admins/uploadprofilepicture",
-        formData,
+        "http://localhost:8000/admins/uploadprofilepicture",
+        { image: imageData },
         {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
           withCredentials: true,
         }
       );
@@ -494,6 +496,16 @@ const Admin_control_panel = () => {
     } catch (err) {
       console.log(err.message);
     }
+  };
+
+  const setFileToBase = (file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
+    });
   };
 
   const [newDeliveryBoyName, setnewDeliveryBoyName] = useState();
@@ -550,21 +562,29 @@ const Admin_control_panel = () => {
   const [newRestaurentAddress, setnewRestaurentAddress] = useState();
 
   // Add new restaurent
-  const handleAddNewRestaurent = () => {
-    const formData = new FormData();
-
-    formData.append("image", image);
-    formData.append("name", newRestaurentName);
-    formData.append("address", newRestaurentAddress);
+  const handleAddNewRestaurent = async () => {
+    if (!image) {
+      alert("Please Upload an Image");
+      return;
+    }
+    const maxSizeInKB = 70;
+    if (image.size > maxSizeInKB * 1024) {
+      alert(`File size should be less than ${maxSizeInKB} KB.`);
+      return;
+    }
 
     setAdd_res(true);
 
-    addNewRestaurent(formData).then((response) => {
-      alert(response);
-      fetchAllRestaurent().then((response) => {
-        setrestaurents(response);
-      });
-    });
+    const imageData = await setFileToBase(image);
+
+    addNewRestaurent(imageData, newRestaurentName, newRestaurentAddress).then(
+      (response) => {
+        alert(response);
+        fetchAllRestaurent().then((response) => {
+          setrestaurents(response);
+        });
+      }
+    );
   };
 
   // Fetch all foods
@@ -696,8 +716,8 @@ const Admin_control_panel = () => {
               <div className="col-6 admin_img ">
                 {profilePicture ? (
                   <img
-                    src={`/adminProfilePictures/${profilePicture}`}
-                    alt="Profile picture"
+                    src={profilePicture}
+                    alt="Profile"
                     onClick={() => {
                       fileInputRef.current.click();
                     }}
@@ -1146,7 +1166,7 @@ const Admin_control_panel = () => {
               className="col-12 m-0 p-0"
               style={{ height: "98vh", overflowY: "auto" }}
             >
-                <div className="btn btn-success mt-2">Cancled Orders</div>
+              <div className="btn btn-success mt-2">Cancled Orders</div>
               <div className="m-0 p-0 d-flex mt-3">
                 <div
                   className="head col-1 pt-2 pb-0"
@@ -1261,8 +1281,9 @@ const Admin_control_panel = () => {
               })}
             </div>
           ) : null}
-         {/* Show delivered orders */}
-         {showDeliveredOrders ? (
+
+          {/* Show delivered orders */}
+          {showDeliveredOrders ? (
             <>
               <div
                 className="col-12 m-0 p-0"
@@ -1638,7 +1659,9 @@ const Admin_control_panel = () => {
                       <div
                         className="col-1"
                         style={{
-                          boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px 1px",display:'flex',justifyContent:'center'
+                          boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px 1px",
+                          display: "flex",
+                          justifyContent: "center",
                         }}
                       >
                         <DeleteButton
@@ -1891,7 +1914,7 @@ const Admin_control_panel = () => {
                       <Update_Res
                         serial={serial_res++}
                         name={name}
-                        image={image}
+                        image={image.url}
                         address={address}
                         id={_id}
                       />

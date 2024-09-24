@@ -8,6 +8,21 @@ const fs = require("fs");
 const orderModel = require("../models/order-model");
 const deliveryBoyModel = require("../models/deliveryBoy-model");
 const adminModel = require("../models/admin-model");
+const cloudinary = require("../utils/cloudinary");
+require("dotenv").config();
+
+// Check isLoggedIn
+module.exports.checkIsLoggedIn = async (req, res) => {
+  try {
+    if (req.user) {
+      res.send(true);
+    } else {
+      res.send(false);
+    }
+  } catch (err) {
+    res.send(err.send);
+  }
+};
 
 // Register User
 module.exports.registerUser = async (req, res) => {
@@ -34,9 +49,9 @@ module.exports.registerUser = async (req, res) => {
           let token = generateToken(user);
           res.cookie("token", token, {
             httpOnly: true, // Cookie is only accessible by the web server
-            secure: true,  // Set to true if using HTTPS
-            sameSite: 'None', // Controls whether cookies are sent with cross-site requests
-            path: '/',       // Cookie is available across the entire domain
+            secure: true, // Set to true if using HTTPS
+            sameSite: "None", // Controls whether cookies are sent with cross-site requests
+            path: "/", // Cookie is available across the entire domain
           });
 
           res.send("User created successfully");
@@ -68,9 +83,9 @@ module.exports.loginUser = async (req, res) => {
               let token = generateToken(user);
               res.cookie("token", token, {
                 httpOnly: true, // Cookie is only accessible by the web server
-                secure: true,  // Set to true if using HTTPS
-                sameSite: 'None', // Controls whether cookies are sent with cross-site requests
-                path: '/',       // Cookie is available across the entire domain
+                secure: true, // Set to true if using HTTPS
+                sameSite: "None", // Controls whether cookies are sent with cross-site requests
+                path: "/", // Cookie is available across the entire domain
               });
               res.send("Login successfully");
             } else {
@@ -85,14 +100,19 @@ module.exports.loginUser = async (req, res) => {
       }
     }
   } catch (err) {
-    return res.status(501).send("Something went wrong");
+    return res.send(err.message);
   }
 };
 
 // Logout
 module.exports.logoutUser = async (req, res) => {
   try {
-    res.cookie("token", "");
+    res.cookie("token", "", {
+      httpOnly: true, // Cookie is only accessible by the web server
+      secure: true, // Set to true if using HTTPS
+      sameSite: "None", // Controls whether cookies are sent with cross-site requests
+      path: "/", // Cookie is available across the entire domain
+    });
     res.send("Logout successfully");
   } catch (err) {
     res.send("Something went wrong");
@@ -133,33 +153,10 @@ module.exports.updateUser = async (req, res) => {
   }
 };
 
-// // Upload Profile Picture
-// module.exports.uploadProfilePicture = async (req, res) => {
-//   if (!req.file) {
-//     return res.status(400).send("No file uploaded.");
-//   }
-//   try {
-//     const oldImage = req.user.image;
-//     await userModel.updateOne(
-//       { email: req.user.email },
-//       { $set: { image: req.file.filename } }
-//     );
-//     if (oldImage)
-//       fs.unlink(`../Frontend/public/userProfilePictures/${oldImage}`, (err) => {
-//         if (err) {
-//           console.log(err.message);
-//         }
-//       });
-//     res.send("File uploaded successfully.");
-//   } catch (err) {
-//     res.send(err.message);
-//   }
-// };
-
 // Upload Profile Picture
 module.exports.uploadProfilePicture = async (req, res) => {
   const image = req.body.image;
-  if (!req.body) {
+  if (!image) {
     return res.status(400).send("No file uploaded.");
   }
   try {
@@ -168,7 +165,7 @@ module.exports.uploadProfilePicture = async (req, res) => {
     const result = await cloudinary.uploader.upload(image, {
       folder: "userProfilePictures",
       width: 300,
-      crop: "scale"
+      crop: "scale",
     });
     await userModel.updateOne(
       { email: req.user.email },

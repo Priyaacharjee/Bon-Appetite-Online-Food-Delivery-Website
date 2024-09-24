@@ -8,7 +8,16 @@ const adminSchema = mongoose.Schema({
   },
   email: String,
   password: String,
-  image: String,
+  image: {
+    public_id: {
+      type: String,
+      required: true,
+    },
+    url: {
+      type: String,
+      required: true,
+    },
+  },
   products: {
     type: Array,
     default: [],

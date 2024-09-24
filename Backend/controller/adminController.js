@@ -11,6 +11,8 @@ const categoryModel = require("../models/category-model");
 const orderModel = require("../models/order-model");
 const foodModel = require("../models/food-model");
 const fs = require("fs");
+const cloudinary = require("../utils/cloudinary");
+require("dotenv").config();
 
 // Create Admin
 module.exports.createAdmin = async (req, res) => {
@@ -60,9 +62,9 @@ module.exports.loginAdmin = async (req, res) => {
               let token = generateToken(admin);
               res.cookie("token", token, {
                 httpOnly: true, // Cookie is only accessible by the web server
-                secure: true,  // Set to true if using HTTPS
-                sameSite: 'None', // Controls whether cookies are sent with cross-site requests
-                path: '/',       // Cookie is available across the entire domain
+                secure: true, // Set to true if using HTTPS
+                sameSite: "None", // Controls whether cookies are sent with cross-site requests
+                path: "/", // Cookie is available across the entire domain
               });
               res.send("Login successfully");
             } else {
@@ -84,7 +86,12 @@ module.exports.loginAdmin = async (req, res) => {
 // Logout Admin
 module.exports.logoutAdmin = async (req, res) => {
   try {
-    res.cookie("token", "");
+    res.cookie("token", "", {
+      httpOnly: true, // Cookie is only accessible by the web server
+      secure: true, // Set to true if using HTTPS
+      sameSite: "None", // Controls whether cookies are sent with cross-site requests
+      path: "/", // Cookie is available across the entire domain
+    });
     res.send("Logout successfully");
   } catch (err) {
     res.send("Something went wrong");
@@ -167,7 +174,6 @@ module.exports.getAdmin = async (req, res) => {
       path: "currentOrders",
       populate: { path: "deliveryBoy userId foodId" },
     });
-    // console.log(admin);
     res.send(admin);
   } catch (err) {
     res.send("Something went wrong");
@@ -243,24 +249,33 @@ module.exports.getAllUsers = async (req, res) => {
 
 // Upload Profile Picture
 module.exports.uploadProfilePicture = async (req, res) => {
-  if (!req.file) {
+  const image = req.body.image;
+  if (!image) {
     return res.status(400).send("No file uploaded.");
   }
   try {
-    const oldImage = req.admin.image;
+    const oldImage = req.admin.image.public_id;
+
+    const result = await cloudinary.uploader.upload(image, {
+      folder: "adminProfilePictures",
+      width: 300,
+      crop: "scale",
+    });
+
     await adminModel.updateOne(
       { email: req.admin.email },
-      { $set: { image: req.file.filename } }
+      {
+        $set: {
+          image: {
+            public_id: result.public_id,
+            url: result.secure_url,
+          },
+        },
+      }
     );
-    if (oldImage)
-      fs.unlink(
-        `../Frontend/public/adminProfilePictures/${oldImage}`,
-        (err) => {
-          if (err) {
-            console.log(err.message);
-          }
-        }
-      );
+    if (oldImage) {
+      await cloudinary.uploader.destroy(req.admin.image.public_id);
+    }
     res.send("File uploaded successfully.");
   } catch (err) {
     res.send(err.message);
@@ -269,22 +284,32 @@ module.exports.uploadProfilePicture = async (req, res) => {
 
 // Add new restaurent
 module.exports.addNewRestaurent = async (req, res) => {
-  if (!req.file) {
+  const { imageData, newRestaurentName, newRestaurentAddress } = req.body;
+  if (!imageData) {
     return res.send("No file uploaded.");
   }
   try {
-    let { name, address } = req.body;
-    if (name && address) {
-      let restaurent = await restaurentModel.findOne({ name, address });
+    if (newRestaurentName && newRestaurentAddress) {
+      let restaurent = await restaurentModel.findOne({
+        name: newRestaurentName,
+        address: newRestaurentAddress,
+      });
       if (restaurent) {
         res.send("Restaurent already exists");
       } else {
-        await restaurentModel.create({
-          name,
-          address,
-          image: req.file.filename,
+        const result = await cloudinary.uploader.upload(imageData, {
+          folder: "restaurentPictures",
         });
-        res.send(`${name} added successfully`);
+
+        await restaurentModel.create({
+          name: newRestaurentName,
+          address: newRestaurentAddress,
+          image: {
+            public_id: result.public_id,
+            url: result.secure_url,
+          },
+        });
+        res.send(`${newRestaurentName} added successfully`);
       }
     } else {
       res.send("Something is missing");
@@ -321,12 +346,9 @@ module.exports.deleteRestaurent = async (req, res) => {
     let id = req.query.id;
     let restaurent = await restaurentModel.findOne({ _id: id });
     let oldImage = restaurent.image;
-    if (oldImage)
-      fs.unlink(`../Frontend/public/restaurentPictures/${oldImage}`, (err) => {
-        if (err) {
-          console.log(err.message);
-        }
-      });
+    if (oldImage) {
+      await cloudinary.uploader.destroy(oldImage.public_id);
+    }
     await restaurentModel.findOneAndDelete({ _id: id });
     if (restaurent) {
       res.send(`${restaurent.name} Restaurent deleted successfully`);

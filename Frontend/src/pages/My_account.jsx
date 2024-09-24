@@ -31,7 +31,7 @@ const My_account = () => {
       setemail(user.email);
       setphone(user.contact);
       setaddress(user.address);
-      if (user.image) SetprofilePicture(user.image.url);
+      SetprofilePicture(user.image.url);
       setLoader(false);
     });
   };
@@ -44,7 +44,7 @@ const My_account = () => {
     setLoading(true);
     try {
       let response = await axios.put(
-        "http://localhost:8000/users/updateuser",
+        "https://bon-appetite-online-food-delivery-website.onrender.com/users/updateuser",
         {
           username: newname || name,
           contact: newphone || phone,
@@ -80,7 +80,6 @@ const My_account = () => {
 
   const fileInputRef = useRef(null);
 
- 
   // Upload profile image
   const handleProfileImage = async (e) => {
     const file = e.target.files[0];
@@ -98,7 +97,7 @@ const My_account = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/users/uploadprofilepicture",
+        "https://online-food-delivery-application-8hro.onrender.com/users/uploadprofilepicture",
         { image: imageData },
         {
           withCredentials: true,

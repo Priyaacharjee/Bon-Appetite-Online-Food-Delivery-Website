@@ -80,7 +80,7 @@ const Update_Res = ({ serial, name, image, address, id }) => {
           }}
         >
           <img
-            src={`/restaurentPictures/${image}`}
+            src={image} alt="Error"
             style={{ height: "100%", width: "20%" }}
           ></img>
         </div>
