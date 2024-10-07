@@ -30,7 +30,7 @@ An **Online Food Delivery Website** built using the MERN stack (MongoDB, Express
 ### Order Page
 ![Order Page](READMEImages/myorder.png) -->
 
-< align-items="center">
+<div align="center">
 <h2>Landing Page</h2>
 <img src="READMEImages/Home.png" alt="Landing Page" width="500" height="300" style="border:2px solid #000; border-radius:10px; margin: 10px;" />
 <h2>Login Page</h2>
