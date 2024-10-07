@@ -53,19 +53,19 @@ An **Online Food Delivery Website** built using the MERN stack (MongoDB, Express
 <div align="center">
   <div style="display: flex; flex-wrap: wrap; justify-content: center;">
     <div style="margin: 10px;">
-      <h2> Update Details</h2>
+      <h3> Update Details</h3>
       <img src="READMEImages/adminupdate.png" alt="Admin update" width="450" height="250" style="border:2px solid #000; border-radius:10px;" />
     </div>
     <div style="margin: 10px;">
-    <h2> Update Foods</h2>
+    <h3> Update Foods</h3>
       <img src="READMEImages/foodupdate.png" alt="Admin food" width="450" height="250" style="border:2px solid #000; border-radius:10px;" />
     </div>
     <div style="margin: 10px;">
-    <h2> Update Restaurents</h2>
+    <h3> Update Restaurents</h3>
       <img src="READMEImages/restaurentupdate.png" alt="Admin res" width="450" height="250" style="border:2px solid #000; border-radius:10px;" />
     </div>
     <div style="margin: 10px;">
-    <h2> Order DB Details</h2>
+    <h3> Order DB Details</h3>
       <img src="READMEImages/orderdb.png" alt="Admin Orders" width="450" height="250" style="border:2px solid #000; border-radius:10px;" />
     </div>
   </div>
