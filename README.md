@@ -49,6 +49,10 @@ An **Online Food Delivery Website** built using the MERN stack (MongoDB, Express
 <img src="READMEImages/myorder.png" alt="Order Page" width="500" height="300" style="border:2px solid #000; border-radius:10px; margin: 10px;" /> </div>
 
 ---
+### 🛠 Admin Panel
+<div align="center">
+<!-- <h2> 🛠 Admin Panel</h2> -->
+<table> <tr> <td><img src="READMEImages/adminupdate.png" alt="Admin update" width="500" height="250" style="border:2px solid #000; border-radius:10px; margin: 10px;" /></td> <td><img src="READMEImages/foodupdate.png" alt="Admin food" width="500" height="250" style="border:2px solid #000; border-radius:10px; margin: 10px;" /></td> <td><img src="READMEImages/orderdb.png" alt="Admin Orders" width="500" height="250" style="border:2px solid #000; border-radius:10px; margin: 10px;" /></td> <td><img src="READMEImages/restaurentupdate.png" alt="Admin res" width="500" height="250" style="border:2px solid #000; border-radius:10px; margin: 10px;" /></td> </tr> </table> </div>
 
 ## 🚀 Features
 
