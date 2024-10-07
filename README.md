@@ -6,7 +6,7 @@ An **Online Food Delivery Website** built using the MERN stack (MongoDB, Express
 
 ## 📸 Screenshots
 
-### Landing Page
+<!-- ### Landing Page
 ![Landing Page](READMEImages/Home.png)
 
 ### Login Page
@@ -28,7 +28,25 @@ An **Online Food Delivery Website** built using the MERN stack (MongoDB, Express
 ![Cart Page](READMEImages/mycart.png)
 
 ### Order Page
-![Order Page](READMEImages/myorder.png)
+![Order Page](READMEImages/myorder.png) -->
+
+<div align-items="center">
+<h2>Landing Page</h2>
+<img src="READMEImages/Home.png" alt="Landing Page" width="400" height="250" style="border:2px solid #000; border-radius:10px; margin: 10px;" />
+<h2>Login Page</h2>
+<img src="READMEImages/login.png" alt="Login Page" width="400" height="250" style="border:2px solid #000; border-radius:10px; margin: 10px;" />
+<h2>Signup Page</h2>
+<img src="READMEImages/signup.png" alt="Signup Page" width="400" height="250" style="border:2px solid #000; border-radius:10px; margin: 10px;" />
+<h2>Home Page</h2>
+<img src="READMEImages/home2.png" alt="Home Page" width="400" height="250" style="border:2px solid #000; border-radius:10px; margin: 10px;" />
+<h2>Restaurant Page</h2>
+<img src="READMEImages/restaurent.png" alt="Restaurant Page" width="400" height="250" style="border:2px solid #000; border-radius:10px; margin: 10px;" />
+<h2>All Food Page</h2>
+<img src="READMEImages/foodpage.png" alt="Food Page" width="450" height="255" style="border:2px solid #000; border-radius:10px; margin: 10px;" />
+<h2>Cart Page</h2>
+<img src="READMEImages/mycart.png" alt="Cart Page" width="400" height="250" style="border:2px solid #000; border-radius:10px; margin: 10px;" />
+<h2>Order Page</h2>
+<img src="READMEImages/myorder.png" alt="Order Page" width="400" height="250" style="border:2px solid #000; border-radius:10px; margin: 10px;" /> </div>
 
 ---
 
