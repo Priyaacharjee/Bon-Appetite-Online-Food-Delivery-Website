@@ -6,30 +6,6 @@ An **Online Food Delivery Website** built using the MERN stack (MongoDB, Express
 
 ## 📸 Screenshots
 
-<!-- ### Landing Page
-![Landing Page](READMEImages/Home.png)
-
-### Login Page
-![Login Page](READMEImages/login.png)
-
-### Signup Page
-![Signup Page](READMEImages/signup.png)
-
-### Home Page
-![Home Page](READMEImages/home2.png)
-
-### Restaurant Page
-![Restaurant Page](READMEImages/restaurent.png)
-
-### All Food Page
-![Food Page](READMEImages/foodpage.png)
-
-### Cart Page
-![Cart Page](READMEImages/mycart.png)
-
-### Order Page
-![Order Page](READMEImages/myorder.png) -->
-
 <div align="center">
 <h2>Landing Page</h2>
 <img src="READMEImages/Home.png" alt="Landing Page" width="500" height="300" style="border:2px solid #000; border-radius:10px; margin: 10px;" />
