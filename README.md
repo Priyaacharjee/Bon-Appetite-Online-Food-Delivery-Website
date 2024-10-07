@@ -51,8 +51,23 @@ An **Online Food Delivery Website** built using the MERN stack (MongoDB, Express
 ---
 ### 🛠 Admin Panel
 <div align="center">
-<!-- <h2> 🛠 Admin Panel</h2> -->
-<table> <tr> <td><img src="READMEImages/adminupdate.png" alt="Admin update" width="500" height="250" style="border:2px solid #000; border-radius:10px; margin: 10px;" /></td> <td><img src="READMEImages/foodupdate.png" alt="Admin food" width="500" height="250" style="border:2px solid #000; border-radius:10px; margin: 10px;" /></td> <td><img src="READMEImages/orderdb.png" alt="Admin Orders" width="500" height="250" style="border:2px solid #000; border-radius:10px; margin: 10px;" /></td> <td><img src="READMEImages/restaurentupdate.png" alt="Admin res" width="500" height="250" style="border:2px solid #000; border-radius:10px; margin: 10px;" /></td> </tr> </table> </div>
+  <h2> 🛠 Admin Panel</h2>
+  <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+    <div style="margin: 10px;">
+      <img src="READMEImages/adminupdate.png" alt="Admin update" width="400" height="200" style="border:2px solid #000; border-radius:10px;" />
+    </div>
+    <div style="margin: 10px;">
+      <img src="READMEImages/foodupdate.png" alt="Admin food" width="400" height="200" style="border:2px solid #000; border-radius:10px;" />
+    </div>
+    <div style="margin: 10px;">
+      <img src="READMEImages/orderdb.png" alt="Admin Orders" width="400" height="200" style="border:2px solid #000; border-radius:10px;" />
+    </div>
+    <div style="margin: 10px;">
+      <img src="READMEImages/restaurentupdate.png" alt="Admin res" width="400" height="200" style="border:2px solid #000; border-radius:10px;" />
+    </div>
+  </div>
+</div>
+
 
 ## 🚀 Features
 
