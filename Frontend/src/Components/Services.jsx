@@ -110,7 +110,7 @@ const Services = () => {
                       style={{ height: "132px", width: "100%" }}
                     >
                       <img
-                        src={`restaurentPictures/${card.image}`}
+                        src={card.image.url}
                         alt=""
                         style={{
                           height: "100%",

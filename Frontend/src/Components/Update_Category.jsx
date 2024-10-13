@@ -12,17 +12,34 @@ const Update_Category = ({ serial, name, image, id }) => {
   const [updatedCategoryName, setupdatedCategoryName] = useState();
   const [updatedCategoryImage, setupdatedCategoryImage] = useState();
 
-  const handleClick_update = () => {
+  const handleClick_update = async () => {
     setClicked_update(!clicked_update);
 
-    const formData = new FormData();
+    const maxSizeInKB = 70;
+    if (
+      updatedCategoryImage &&
+      updatedCategoryImage.size > maxSizeInKB * 1024
+    ) {
+      alert(`File size should be less than ${maxSizeInKB} KB.`);
+      return;
+    }
+    let imageData = null;
+    if (updatedCategoryImage) {
+      imageData = await setFileToBase(updatedCategoryImage);
+    }
 
-    formData.append("id", id);
-    formData.append("image", updatedCategoryImage);
-    formData.append("name", updatedCategoryName);
-
-    updateCategory(formData).then((response) => {
+    updateCategory(id, imageData, updatedCategoryName).then((response) => {
       alert(response);
+    });
+  };
+
+  const setFileToBase = (file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
     });
   };
 
@@ -73,10 +90,7 @@ const Update_Category = ({ serial, name, image, id }) => {
             alignItems: "center",
           }}
         >
-          <img
-            src={`/categoryPictures/${image}`}
-            style={{ height: "100%", width: "30%" }}
-          ></img>
+          <img src={image} style={{ height: "100%", width: "30%" }}></img>
         </div>
         <div
           className="col-2"
@@ -104,16 +118,14 @@ const Update_Category = ({ serial, name, image, id }) => {
             justifyContent: "center",
             alignItems: "center",
           }}
+          onClick={() => {
+            deleteCategory(id).then((response) => {
+              alert(response);
+              setdisplay("none");
+            });
+          }}
         >
-          <DeleteButton
-            style={{ cursor: "pointer" }}
-            onClick={() => {
-              deleteCategory(id).then((response) => {
-                alert(response);
-                setdisplay("none");
-              });
-            }}
-          />
+          <DeleteButton style={{ cursor: "pointer" }} />
         </div>
       </div>
 

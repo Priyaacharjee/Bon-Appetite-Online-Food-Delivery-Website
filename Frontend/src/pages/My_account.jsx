@@ -97,7 +97,7 @@ const My_account = () => {
 
     try {
       const response = await axios.post(
-        "https://online-food-delivery-application-8hro.onrender.com/users/uploadprofilepicture",
+        "https://bon-appetite-online-food-delivery-website.onrender.com/users/uploadprofilepicture",
         { image: imageData },
         {
           withCredentials: true,

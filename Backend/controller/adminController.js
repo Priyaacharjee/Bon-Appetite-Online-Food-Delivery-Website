@@ -363,37 +363,45 @@ module.exports.deleteRestaurent = async (req, res) => {
 // Update Restaurent
 module.exports.updateRestaurent = async (req, res) => {
   try {
-    let { id, name, address } = req.body;
-    let image = req.file;
+    let { id, imageData, updatedRestaurentName, updatedRestaurentAddress } =
+      req.body;
 
-    if (name !== "undefined") {
-      await restaurentModel.findOneAndUpdate({ _id: id }, { $set: { name } });
-    }
-    if (address !== "undefined") {
+    if (updatedRestaurentName !== "undefined") {
       await restaurentModel.findOneAndUpdate(
         { _id: id },
-        { $set: { address } }
+        { $set: { name: updatedRestaurentName } }
+      );
+    }
+    if (updatedRestaurentAddress !== "undefined") {
+      await restaurentModel.findOneAndUpdate(
+        { _id: id },
+        { $set: { address: updatedRestaurentAddress } }
       );
     }
 
-    if (image !== undefined) {
+    if (imageData !== null) {
+      const result = await cloudinary.uploader.upload(imageData, {
+        folder: "restaurentPictures",
+      });
+
       let restaurent = await restaurentModel.findOne({ _id: id });
       const oldImage = restaurent.image;
-      if (oldImage)
-        fs.unlink(
-          `../Frontend/public/restaurentPictures/${oldImage}`,
-          (err) => {
-            if (err) {
-              console.log(err.message);
-            }
-          }
-        );
+      if (oldImage) {
+        await cloudinary.uploader.destroy(oldImage.public_id);
+      }
+
       await restaurentModel.findOneAndUpdate(
         { _id: id },
-        { $set: { image: image.filename } }
+        {
+          $set: {
+            image: {
+              public_id: result.public_id,
+              url: result.secure_url,
+            },
+          },
+        }
       );
     }
-
     res.send("Restaurent updated successfully");
   } catch (err) {
     res.send(err.message);
@@ -402,18 +410,29 @@ module.exports.updateRestaurent = async (req, res) => {
 
 // Add new category
 module.exports.addNewCategory = async (req, res) => {
-  if (!req.file) {
+  const { imageData, categoryName } = req.body;
+  if (!imageData) {
     return res.send("No file uploaded.");
   }
   try {
-    let { name } = req.body;
-    if (name) {
-      await categoryModel.create({
-        name,
-        image: req.file.filename,
-      });
+    if (categoryName) {
+      let category = await categoryModel.findOne({ name: categoryName });
+      if (category) {
+        res.send(`${category.name} category already exists`);
+      } else {
+        const result = await cloudinary.uploader.upload(imageData, {
+          folder: "categoryPictures",
+        });
+        await categoryModel.create({
+          name: categoryName,
+          image: {
+            public_id: result.public_id,
+            url: result.secure_url,
+          },
+        });
+      }
+      res.send(`${categoryName} category is created`);
     }
-    res.send(`${name} Category is created`);
   } catch (err) {
     res.send(err.message);
   }
@@ -436,12 +455,9 @@ module.exports.deleteCategory = async (req, res) => {
     if (id) {
       let category = await categoryModel.findOne({ _id: id });
       const oldImage = category.image;
-      if (oldImage)
-        fs.unlink(`../Frontend/public/categoryPictures/${oldImage}`, (err) => {
-          if (err) {
-            console.log(err.message);
-          }
-        });
+      if (oldImage) {
+        await cloudinary.uploader.destroy(oldImage.public_id);
+      }
 
       await categoryModel.findOneAndDelete({ _id: id });
       res.send(`${category.name} deleted successfully`);
@@ -454,28 +470,38 @@ module.exports.deleteCategory = async (req, res) => {
 // Update Category
 module.exports.updateCategory = async (req, res) => {
   try {
-    let { id, name } = req.body;
-    let image = req.file;
-    if (name !== "undefined") {
-      await categoryModel.findOneAndUpdate({ _id: id }, { $set: { name } });
-    }
-
-    if (image !== undefined) {
-      let category = await categoryModel.findOne({ _id: id });
-      const oldImage = category.image;
-      if (oldImage)
-        fs.unlink(`../Frontend/public/categoryPictures/${oldImage}`, (err) => {
-          if (err) {
-            console.log(err.message);
-          }
-        });
+    let { id, imageData, updatedCategoryName } = req.body;
+    if (updatedCategoryName !== "undefined") {
       await categoryModel.findOneAndUpdate(
         { _id: id },
-        { $set: { image: image.filename } }
+        { $set: { name: updatedCategoryName } }
       );
     }
 
-    res.send(`${name} category updated successfully`);
+    if (imageData !== null) {
+      const result = await cloudinary.uploader.upload(imageData, {
+        folder: "categoryPictures",
+      });
+
+      let category = await categoryModel.findOne({ _id: id });
+      const oldImage = category.image;
+      if (oldImage) {
+        await cloudinary.uploader.destroy(oldImage.public_id);
+      }
+      await categoryModel.findOneAndUpdate(
+        { _id: id },
+        {
+          $set: {
+            image: {
+              public_id: result.public_id,
+              url: result.secure_url,
+            },
+          },
+        }
+      );
+    }
+
+    res.send(`${updatedCategoryName} category updated successfully`);
   } catch (err) {
     res.send(err.message);
   }

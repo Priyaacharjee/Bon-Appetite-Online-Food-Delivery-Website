@@ -359,12 +359,8 @@ export const addNewRestaurent = async (
   try {
     let response = await axios.post(
       "https://bon-appetite-online-food-delivery-website.onrender.com/admins/addnewrestaurent",
-      // formData,
       { imageData, newRestaurentName, newRestaurentAddress },
       {
-        // headers: {
-        //   "Content-Type": "multipart/form-data",
-        // },
         withCredentials: true,
       }
     );
@@ -421,15 +417,17 @@ export const deleteRestaurent = async (id) => {
 };
 
 // Update Restautrent
-export const updateRestaurent = async (formData) => {
+export const updateRestaurent = async (
+  id,
+  imageData,
+  updatedRestaurentName,
+  updatedRestaurentAddress
+) => {
   try {
     let response = await axios.put(
       "https://bon-appetite-online-food-delivery-website.onrender.com/admins/updaterestaurent",
-      formData,
+      { id, imageData, updatedRestaurentName, updatedRestaurentAddress },
       {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
         withCredentials: true,
       }
     );
@@ -440,15 +438,12 @@ export const updateRestaurent = async (formData) => {
 };
 
 // Add new category
-export const addNewCategory = async (formData) => {
+export const addNewCategory = async (imageData, categoryName) => {
   try {
     let response = await axios.post(
       "https://bon-appetite-online-food-delivery-website.onrender.com/admins/addnewcategory",
-      formData,
+      { imageData, categoryName },
       {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
         withCredentials: true,
       }
     );
@@ -490,15 +485,12 @@ export const deleteCategory = async (id) => {
 };
 
 // Update Category
-export const updateCategory = async (formData) => {
+export const updateCategory = async (id, imageData, updatedCategoryName) => {
   try {
     let response = await axios.put(
       "https://bon-appetite-online-food-delivery-website.onrender.com/admins/updatecategory",
-      formData,
+      { id, imageData, updatedCategoryName },
       {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
         withCredentials: true,
       }
     );

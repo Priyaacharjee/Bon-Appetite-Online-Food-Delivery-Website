@@ -1,4 +1,4 @@
-// Menu.jsx
+// *Menu.jsx*
 import React, { useEffect, useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -175,7 +175,7 @@ const Menu = () => {
             />
           </div>
           <div style={{ paddingTop: "8rem" }}>
-            <img src="/Image/oops.jpg" alt="Error"></img>
+            <img src="/Image/oops.jpg"></img>
           </div>
           <div style={{ paddingTop: "2rem" }}>
             <h4>You Need to first Login!</h4>
@@ -882,7 +882,7 @@ const Menu = () => {
                         style={{ height: "50%", width: "9%" }}
                       >
                         <img
-                          src={`/categoryPictures/${image}`}
+                          src={image.url}
                           alt="categories"
                           style={{
                             boxShadow:
@@ -915,7 +915,7 @@ const Menu = () => {
                 <div className="container-fluid">
                   <div className="col-lg-12 pt-1 pl-5 pr-5 mt-3">
                     {data.map((elem) => {
-                      const { _id, image, name, price, restaurent } =
+                      const { _id, image, name, category, price, restaurent } =
                         elem;
                       return (
                         <>

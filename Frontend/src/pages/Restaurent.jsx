@@ -1,4 +1,4 @@
-// Restaurent.jsx
+// *Restaurent.jsx*
 import React, { useState, useEffect } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import { GiHamburgerMenu } from "react-icons/gi";

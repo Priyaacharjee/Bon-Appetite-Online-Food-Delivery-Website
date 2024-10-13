@@ -1,4 +1,4 @@
-// Card.jsx
+// *Card.jsx*
 import React, { useEffect, useState } from "react";
 import { addToCart, findUser } from "../utils/utils";
 import { useNavigate } from "react-router-dom";

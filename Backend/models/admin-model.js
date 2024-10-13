@@ -11,11 +11,11 @@ const adminSchema = mongoose.Schema({
   image: {
     public_id: {
       type: String,
-      required: true,
+      required: false,
     },
     url: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   products: {

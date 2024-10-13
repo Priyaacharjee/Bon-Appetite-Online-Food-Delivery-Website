@@ -12,16 +12,28 @@ const Update_Res = ({ serial, name, image, address, id }) => {
   const [updatedRestaurentAddress, setupdatedRestaurentAddress] = useState();
   const [updatedRestaurentImage, setupdatedRestaurentImage] = useState();
 
-  const handleClick_update = () => {
+  const handleClick_update = async () => {
     setClicked_update(!clicked_update);
-    const formData = new FormData();
 
-    formData.append("id", id);
-    formData.append("image", updatedRestaurentImage);
-    formData.append("name", updatedRestaurentName);
-    formData.append("address", updatedRestaurentAddress);
+    const maxSizeInKB = 70;
+    if (
+      updatedRestaurentImage &&
+      updatedRestaurentImage.size > maxSizeInKB * 1024
+    ) {
+      alert(`File size should be less than ${maxSizeInKB} KB.`);
+      return;
+    }
+    let imageData = null;
+    if (updatedRestaurentImage) {
+      imageData = await setFileToBase(updatedRestaurentImage);
+    }
 
-    updateRestaurent(formData).then((response) => {
+    updateRestaurent(
+      id,
+      imageData,
+      updatedRestaurentName,
+      updatedRestaurentAddress
+    ).then((response) => {
       alert(response);
     });
   };
@@ -29,6 +41,16 @@ const Update_Res = ({ serial, name, image, address, id }) => {
   const handleClick_delete = () => {
     deleteRestaurent(id).then(() => {
       setdisplay("none");
+    });
+  };
+
+  const setFileToBase = (file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
     });
   };
 
@@ -79,10 +101,7 @@ const Update_Res = ({ serial, name, image, address, id }) => {
             alignItems: "center",
           }}
         >
-          <img
-            src={image} alt="Error"
-            style={{ height: "100%", width: "20%" }}
-          ></img>
+          <img src={image} style={{ height: "100%", width: "20%" }} alt="img"></img>
         </div>
         <div
           className="col-3"

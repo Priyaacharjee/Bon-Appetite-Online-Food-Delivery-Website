@@ -44,12 +44,12 @@ const Footer = ({ phone, email, fbLink, instaLink }) => {
         <div className="footer">
           <div className="foot_panel4">
             <div className="copyright">
-              &copy;Prepared on 2023-24, Bon Appetite
+              &copy;Prepared on 2023, Bon Apetite.com
             </div>
             <div style={{fontSize:'20px',paddingTop:'1rem'}}>Developed By</div>
-            <div><strong>Keya Tarafdar</strong></div>
-            <div><strong>Priya Acharjee</strong></div>
-            <div><strong>Shreya Kundu</strong></div>
+            <div>Keya Tarafdar</div>
+            <div>Priya Acharjee</div>
+            <div>Shreya Kundu</div>
           </div>
         </div>
       </Navbar>

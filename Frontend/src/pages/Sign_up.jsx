@@ -28,27 +28,27 @@ const Sign_up = () => {
     e.preventDefault();
 
     // Username is required-----------------------
-    if (username.length == 0) setusernameerror(true);
+    if (username.length === 0) setusernameerror(true);
     else setusernameerror(false);
 
     // Password is Required!---------------------------
-    if (password.length == 0) setpassworderror(true);
+    if (password.length === 0) setpassworderror(true);
     else setpassworderror(false);
 
     // Contact no. is Required!-------------------------
-    if (contact.length == 0) setcontacterror(true);
+    if (contact.length === 0) setcontacterror(true);
     else setcontacterror(false);
 
     // Email is Required!-----------------------------
-    if (contact.length == 0) setemailerror(true);
+    if (contact.length === 0) setemailerror(true);
     else setemailerror(false);
 
     // Password is not same!---------------------------
-    if (password != confirm_password) setnotsame(true);
+    if (password !== confirm_password) setnotsame(true);
     else setnotsame(false);
 
     // Wrong Contact no!-------------------------------
-    if (contact.length > 0 && contact.length != 10) setwrongcontact(true);
+    if (contact.length > 0 && contact.length !== 10) setwrongcontact(true);
     else setwrongcontact(false);
 
     // Password should have atleast 6 character!-------------------------
@@ -61,7 +61,7 @@ const Sign_up = () => {
       username.length > 0 &&
       password.length >= 6 &&
       password === confirm_password &&
-      contact.length == 10 &&
+      contact.length === 10 &&
       email.length > 0
     ) {
       signUp(email, password, username, contact).then((response) => {
@@ -213,7 +213,7 @@ const Sign_up = () => {
                     </label>
                   ) : null}
                   {confirm_password.length > 0 &&
-                  password != confirm_password ? (
+                  password !== confirm_password ? (
                     <label style={{ color: "red" }}>
                       Password is not same!
                     </label>

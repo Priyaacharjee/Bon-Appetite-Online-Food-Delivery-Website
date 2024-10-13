@@ -136,9 +136,6 @@ const Home2 = () => {
     fetchAllFoods().then((response) => {
       setfoods(response);
     });
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
   }, [handleAddToCart]);
 
   useEffect(() => {
@@ -151,6 +148,7 @@ const Home2 = () => {
       } else {
         setAccount("My Account");
       }
+      setLoading(false);
     });
   }, []);
 
@@ -188,7 +186,7 @@ const Home2 = () => {
     );
   }
 
-  if (loading) {
+  if (loading || foods.length === 0) {
     return (
       <div
         style={{

@@ -85,14 +85,16 @@ const Admin_control_panel = () => {
     getAdmin();
 
     getAllOrders().then((response) => {
-      const canceledOrders = response.filter(
-        (order) => order.isDeleted === true
-      );
-      setallCancledOrders(canceledOrders);
-      const deliveredOrders = response.filter(
-        (order) => order.deliverStatus === "Delivered"
-      );
-      setallDeliveredOrders(deliveredOrders);
+      if (response && Array.isArray(response)) {
+        const canceledOrders = response.filter(
+          (order) => order.isDeleted === true
+        );
+        setallCancledOrders(canceledOrders);
+        const deliveredOrders = response.filter(
+          (order) => order.deliverStatus === "Delivered"
+        );
+        setallDeliveredOrders(deliveredOrders);
+      }
     });
   };
 
@@ -603,13 +605,20 @@ const Admin_control_panel = () => {
   const [allCategory, setallCategory] = useState([]);
 
   // Add new category
-  const handleAddNewCategory = () => {
-    const formData = new FormData();
+  const handleAddNewCategory = async () => {
+    if (!categoryImage) {
+      alert("Please Upload an Image");
+      return;
+    }
+    const maxSizeInKB = 70;
+    if (categoryImage.size > maxSizeInKB * 1024) {
+      alert(`File size should be less than ${maxSizeInKB} KB.`);
+      return;
+    }
 
-    formData.append("image", categoryImage);
-    formData.append("name", categoryName);
+    const imageData = await setFileToBase(categoryImage);
 
-    addNewCategory(formData).then((response) => {
+    addNewCategory(imageData, categoryName).then((response) => {
       alert(response);
       fetchAllCategory().then((response) => {
         setallCategory(response);
@@ -638,14 +647,16 @@ const Admin_control_panel = () => {
     });
 
     getAllOrders().then((response) => {
-      const canceledOrders = response.filter(
-        (order) => order.isDeleted === true
-      );
-      setallCancledOrders(canceledOrders);
-      const deliveredOrders = response.filter(
-        (order) => order.deliverStatus === "Delivered"
-      );
-      setallDeliveredOrders(deliveredOrders);
+      if (response && Array.isArray(response)) {
+        const canceledOrders = response.filter(
+          (order) => order.isDeleted === true
+        );
+        setallCancledOrders(canceledOrders);
+        const deliveredOrders = response.filter(
+          (order) => order.deliverStatus === "Delivered"
+        );
+        setallDeliveredOrders(deliveredOrders);
+      }
     });
     setallLoading(false);
   }, []);
@@ -2064,7 +2075,7 @@ const Admin_control_panel = () => {
                       <Update_Category
                         serial={serial_food_category++}
                         name={name}
-                        image={image}
+                        image={image.url}
                         id={_id}
                       />
                     </>
