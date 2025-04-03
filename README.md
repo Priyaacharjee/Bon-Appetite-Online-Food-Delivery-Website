@@ -2,6 +2,12 @@
 
 An **Online Food Delivery Website** built using the MERN stack (MongoDB, Express.js, React, Node.js). Users can sign up, browse restaurants, add food items to their cart, and order their favorite meals online. It also includes dedicated **Admin** and **Delivery Agent** panels for managing orders, food, restaurants, and deliveries.
 
+
+## DUMMY LOGIN DETAILS: 
+**Email:** priya@gmail.com
+**Password:** 123456
+
+
 ---
 
 ## 📸 Screenshots

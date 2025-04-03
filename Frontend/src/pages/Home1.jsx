@@ -127,11 +127,11 @@ const Home1 = () => {
             >
               <FaPhoneAlt className="icon" onClick={PhoneClick} />
               <MdEmail className="icon" onClick={EmailClick} />
-              <a href="https://www.facebook.com/keya.tarafdar.75" target="new">
+              <a href="https://www.facebook.com/priya.acharjee.5623" target="new">
                 <FaFacebook className="icon" />
               </a>
               <a
-                href="https://www.instagram.com/keya.tarafdar.75/"
+                href="https://www.instagram.com/priyaacharjee_19/?hl=en"
                 target="new"
               >
                 <FaInstagramSquare className="icon" />
