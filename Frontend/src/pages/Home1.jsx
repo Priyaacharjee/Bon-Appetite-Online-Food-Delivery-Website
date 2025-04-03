@@ -131,9 +131,7 @@ const Home1 = () => {
                 <FaFacebook className="icon" />
               </a>
               <a
-                href="https://www.instagram.com/priyaacharjee_19/?hl=en"
-                target="new"
-              >
+                href="https://www.instagram.com/priyaacharjee_19/?hl=en" target="new">
                 <FaInstagramSquare className="icon" />
               </a>
             </div>
