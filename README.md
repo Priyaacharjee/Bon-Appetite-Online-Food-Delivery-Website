@@ -4,7 +4,7 @@ An **Online Food Delivery Website** built using the MERN stack (MongoDB, Express
 
 
 ## DUMMY LOGIN DETAILS: 
-**Email:** priya@gmail.com
+**Email:** priya@gmail.com <br>
 **Password:** 123456
 
 
